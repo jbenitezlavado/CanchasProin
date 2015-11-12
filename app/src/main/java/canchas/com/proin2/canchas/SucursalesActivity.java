@@ -21,12 +21,17 @@ import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import canchas.com.proin2.canchas.R;
+import canchas.com.proin2.canchas.entidades.CentroDeportivo;
 import canchas.com.proin2.canchas.utilidades.ConexionWS;
 
 public class SucursalesActivity extends AppCompatActivity {
 
     private GoogleMap googleMap;
+    private List<CentroDeportivo> lista=new ArrayList<CentroDeportivo>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,13 +48,16 @@ public class SucursalesActivity extends AppCompatActivity {
 
                 // Toast.makeText(getActivity(), marker.getId(), Toast.LENGTH_SHORT).show();
                 Intent i=new Intent(SucursalesActivity.this,CanchasActivity.class);
+                Bundle objBundle2=new Bundle();
+                objBundle2.putSerializable("canchas.com.proin2.canchas.objCampo",lista.get(0));
+                i.putExtras(objBundle2);
                 startActivity(i);
             }
         });
 
+        WSCentroDeportivo ws=new WSCentroDeportivo();
+        ws.execute();
 
-        setMarker(new LatLng(-8.094480, -79.004344),"PECSA","Av. César Vallejo 230");
-        setMarker(new LatLng(-8.093345, -79.004024),"Repsol","Av. César Vallejo 270");
 
     }
 
@@ -115,13 +123,23 @@ public class SucursalesActivity extends AppCompatActivity {
                 if (obj1 == null){
                     resul = false;
                 }else{
-                   /* Usuario objUsuario=new Usuario();
-                    objUsuario.setId(Integer.parseInt(obj1.getProperty(0).toString()));
-                    objUsuario.setNick(obj1.getProperty(1).toString());
-                    objUsuario.setIdTipoUsuario(Integer.parseInt(obj1.getProperty(2).toString()));
 
-                    final Application global=(Application)getApplicationContext();
-                    global.setObjUsuario(objUsuario);*/
+                    for(int i=0; i<obj1.getPropertyCount(); i++)
+                    {
+                        SoapObject obj2 =(SoapObject) obj1.getProperty(i);
+                        CentroDeportivo objCentro=new CentroDeportivo();
+                        objCentro.setId(Integer.parseInt(obj2.getProperty(0).toString()));
+                        objCentro.setNombre(obj2.getProperty(1).toString());
+                        objCentro.setDireccion(obj2.getProperty(2).toString());
+                        objCentro.setTelefono(obj2.getProperty(3).toString());
+                        objCentro.setBalon(Boolean.parseBoolean(obj2.getProperty(4).toString()));
+                        objCentro.setCamisetas(Boolean.parseBoolean(obj2.getProperty(5).toString()));
+                        objCentro.setLatitud(Double.parseDouble(obj2.getProperty(6).toString()));
+                        objCentro.setLongitud(Double.parseDouble(obj2.getProperty(7).toString()));
+
+                        lista.add(objCentro);
+
+                    }
 
                 }
             }
@@ -136,6 +154,10 @@ public class SucursalesActivity extends AppCompatActivity {
         protected void onPostExecute(Boolean result) {
 
             if(result){
+
+                for (CentroDeportivo obj:lista){
+                    setMarker(new LatLng(obj.getLatitud(), obj.getLongitud()),obj.getNombre(),obj.getNombre());
+                }
                /* Intent i=new Intent(LoginActivity.this,MainActivity.class);
                 startActivity(i);*/
             }

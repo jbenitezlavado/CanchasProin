@@ -22,12 +22,98 @@
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:layout_gravity="center_vertical"
-                android:text="Total: "
+                android:text="Nombre: "
                 />
 
             <TextView
-                android:id="@+id/lblTotal"
-                android:layout_width="35dp"
+                android:id="@+id/lblNombre"
+                android:layout_height="35dp"
+                android:layout_width="wrap_content"
+                android:textStyle="bold"
+                android:text="0"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                />
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:layout_gravity="center_vertical"
+                android:text="Direccion: "
+                />
+
+            <TextView
+                android:id="@+id/lblDireccion"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:textStyle="bold"
+                android:text="0"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                />
+
+
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp">
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:layout_gravity="center_vertical"
+                android:text="Telefono: "
+                />
+
+            <TextView
+                android:id="@+id/lblTelefono"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:textStyle="bold"
+                android:text="0"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                />
+
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:layout_gravity="center_vertical"
+                android:text="Balon: "
+                />
+
+            <TextView
+                android:id="@+id/lblBalon"
+                android:layout_width="wrap_content"
+                android:layout_height="35dp"
+                android:textStyle="bold"
+                android:text="0"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                />
+
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:layout_gravity="center_vertical"
+                android:text="Camisetas: "
+                />
+
+            <TextView
+                android:id="@+id/lblCamisetas"
+                android:layout_width="wrap_content"
                 android:layout_height="35dp"
                 android:textStyle="bold"
                 android:text="0"

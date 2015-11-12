@@ -1,9 +1,11 @@
 package canchas.com.proin2.canchas.entidades;
 
+import java.io.Serializable;
+
 /**
  * Created by USER on 11/11/2015.
  */
-public class CentroDeportivo {
+public class CentroDeportivo implements Serializable {
     private int id;
     private String nombre;
     private String direccion;
