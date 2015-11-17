@@ -1,9 +1,17 @@
 apply plugin: 'com.android.application'
 
 android {
+
+    signingConfigs {
+        config {
+            keyAlias 'canchas'
+            keyPassword 'canchas'
+            storeFile file('D:/KeyStoreCanchas/keycanchas.jks')
+            storePassword 'canchas'
+        }
+    }
     compileSdkVersion 22
     buildToolsVersion "22.0.1"
-
     defaultConfig {
         applicationId "canchas.com.proin2.canchas"
         minSdkVersion 14
@@ -15,6 +23,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.config
         }
     }
 }

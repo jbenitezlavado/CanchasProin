@@ -23,6 +23,7 @@
                 android:textStyle="bold"
                 android:layout_gravity="center_vertical"
                 android:text="Nombre: "
+                android:textColor="@color/application"
                 />
 
             <TextView
@@ -35,6 +36,14 @@
                 android:gravity="center"
                 />
 
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp">
+
+
             <TextView
 
                 android:layout_width="wrap_content"
@@ -42,6 +51,7 @@
                 android:textStyle="bold"
                 android:layout_gravity="center_vertical"
                 android:text="Direccion: "
+                android:textColor="@color/application"
                 />
 
             <TextView
@@ -54,10 +64,9 @@
                 android:gravity="center"
                 />
 
-
-
-
         </LinearLayout>
+
+
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="wrap_content"
@@ -70,6 +79,7 @@
                 android:textStyle="bold"
                 android:layout_gravity="center_vertical"
                 android:text="Telefono: "
+                android:textColor="@color/application"
                 />
 
             <TextView
@@ -89,7 +99,8 @@
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:layout_gravity="center_vertical"
-                android:text="Balon: "
+                android:text=" Balon: "
+                android:textColor="@color/application"
                 />
 
             <TextView
@@ -108,7 +119,8 @@
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:layout_gravity="center_vertical"
-                android:text="Camisetas: "
+                android:text=" Camisetas: "
+                android:textColor="@color/application"
                 />
 
             <TextView
@@ -121,6 +133,24 @@
                 android:gravity="center"
                 />
 
+        </LinearLayout>
+
+
+
+
+        <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp">
+            <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:layout_gravity="center_vertical"
+                android:text="CAMPOS "
+                android:textColor="@color/application"
+                />
         </LinearLayout>
 
         <View android:id="@+id/primerdivisor"

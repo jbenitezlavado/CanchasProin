@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -49,11 +50,15 @@ public class SucursalesActivity extends AppCompatActivity {
                 // Toast.makeText(getActivity(), marker.getId(), Toast.LENGTH_SHORT).show();
                 Intent i=new Intent(SucursalesActivity.this,CanchasActivity.class);
                 Bundle objBundle2=new Bundle();
-                objBundle2.putSerializable("canchas.com.proin2.canchas.objCampo",lista.get(0));
+                objBundle2.putSerializable("canchas.com.proin2.canchas.objSucursal",lista.get(0));
                 i.putExtras(objBundle2);
                 startActivity(i);
             }
         });
+
+
+        googleMap.moveCamera(CameraUpdateFactory.zoomTo(12));
+        googleMap.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(-8.106154, -79.023623)));
 
         WSCentroDeportivo ws=new WSCentroDeportivo();
         ws.execute();

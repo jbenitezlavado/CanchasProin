@@ -119,6 +119,7 @@ public class LoginActivity extends AppCompatActivity {
                     objUsuario.setId(Integer.parseInt(obj1.getProperty(0).toString()));
                     objUsuario.setNick(obj1.getProperty(1).toString());
                     objUsuario.setIdTipoUsuario(Integer.parseInt(obj1.getProperty(2).toString()));
+                    objUsuario.setIdDeportista(Integer.parseInt(obj1.getProperty(4).toString()));
 
                     final Application global=(Application)getApplicationContext();
                     global.setObjUsuario(objUsuario);

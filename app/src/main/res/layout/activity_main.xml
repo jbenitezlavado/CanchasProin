@@ -33,6 +33,7 @@
                     android:layout_centerVertical="false"
                     android:layout_column="0"
                     android:layout_gravity="center_horizontal"
+                    android:onClick="viewMisReservas"
                     android:background="@mipmap/icn_cancha"
                     />
             </FrameLayout>
@@ -48,6 +49,7 @@
                     android:layout_height="70dp"
                     android:layout_centerVertical="false"
                     android:layout_column="1"
+                    android:onClick="viewDeportistas"
                     android:layout_gravity="center_horizontal"
                     android:background="@mipmap/icn_soccerplayer"
                     />

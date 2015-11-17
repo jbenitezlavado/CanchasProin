@@ -1,9 +1,11 @@
 package canchas.com.proin2.canchas.entidades;
 
+import java.io.Serializable;
+
 /**
  * Created by USER on 11/11/2015.
  */
-public class Campo {
+public class Campo implements Serializable {
 
     private int id;
     private int largo;

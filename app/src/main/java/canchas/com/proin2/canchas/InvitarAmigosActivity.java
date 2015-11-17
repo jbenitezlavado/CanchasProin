@@ -1,6 +1,5 @@
 package canchas.com.proin2.canchas;
 
-import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -11,15 +10,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
-import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import com.google.android.gms.internal.fe;
 
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
@@ -27,79 +21,43 @@ import org.ksoap2.serialization.SoapPrimitive;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 
-import canchas.com.proin2.canchas.entidades.Campo;
-import canchas.com.proin2.canchas.entidades.Horario;
+import canchas.com.proin2.canchas.entidades.Deportista;
 import canchas.com.proin2.canchas.entidades.Reserva;
 import canchas.com.proin2.canchas.entidades.Usuario;
 import canchas.com.proin2.canchas.utilidades.Application;
 import canchas.com.proin2.canchas.utilidades.ConexionWS;
 
-public class ReservaActivity extends AppCompatActivity {
+public class InvitarAmigosActivity extends AppCompatActivity {
 
-
-    private EditText dtpDate;
-    private TextView lblTotal;
-
-    private SimpleDateFormat dateFormatter;
-    private ListView listaAdapter;
-
-    private DatePickerDialog fromDatePickerDialog;
-
-    private static Campo objCampo;
+    private static Reserva objReserva;
     private Usuario objUsuario;
-
-    private List<Horario> listaHorario=new ArrayList<Horario>();
+    private ListView listaAdapter;
+    private List<Deportista> listaDeportista=new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_reserva);
+        setContentView(R.layout.activity_invitar_amigos);
 
-        if(objCampo==null){
-            objCampo=(Campo)getIntent().getExtras().getSerializable("canchas.com.proin2.canchas.objCampo");
+        if(objReserva==null){
+            objReserva=(Reserva)getIntent().getExtras().getSerializable("canchas.com.proin2.canchas.objReserva");
         }
+
         final Application global=(Application)getApplicationContext();
         objUsuario=global.getObjUsuario();
 
-        dateFormatter = new SimpleDateFormat("dd-MM-yyyy", Locale.US);
-        dtpDate=(EditText)findViewById(R.id.dtpFecha);
-        lblTotal=(TextView)findViewById(R.id.lblTotal);
-
-        setDateTimeField();
-    }
-
-
-    private void setDateTimeField() {
-        dtpDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                fromDatePickerDialog.show();
-            }
-        });
-
-        Calendar newCalendar = Calendar.getInstance();
-        fromDatePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-
-            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                Calendar newDate = Calendar.getInstance();
-                newDate.set(year, monthOfYear, dayOfMonth);
-                dtpDate.setText(dateFormatter.format(newDate.getTime()));
-            }
-
-        },newCalendar.get(Calendar.YEAR), newCalendar.get(Calendar.MONTH), newCalendar.get(Calendar.DAY_OF_MONTH));
+        WSListarAmigos ws=new WSListarAmigos();
+        ws.execute();
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_reserva, menu);
+        getMenuInflater().inflate(R.menu.menu_invitar_amigos, menu);
         return true;
     }
 
@@ -118,21 +76,8 @@ public class ReservaActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void viewBuscar(View v){
 
-        if(!dtpDate.getText().toString().equals("")){
-            WSListarHorarios ws=new WSListarHorarios();
-            ws.execute();
-        }
-        else{
-            Toast.makeText(ReservaActivity.this, "Seleccione una fecha primero",
-                    Toast.LENGTH_LONG).show();
-        }
-
-    }
-
-
-    private class WSListarHorarios extends AsyncTask<String,Integer,Boolean> {
+    private class WSListarAmigos extends AsyncTask<String,Integer,Boolean> {
         boolean error=false;
         protected void onPreExecute() {
             super.onPreExecute();
@@ -142,13 +87,10 @@ public class ReservaActivity extends AppCompatActivity {
         protected Boolean doInBackground(String... params) {
             boolean resul = true;
 
-            ConexionWS objConex=new ConexionWS("listarHorarioDisponible");
-
+            ConexionWS objConex=new ConexionWS("listarAmigos");
 
             SoapObject request = new SoapObject(objConex.getNameSpace(), objConex.getMethodName());
-            request.addProperty("fecha", dtpDate.getText().toString());
-            request.addProperty("idcampo",objCampo.getId());
-
+            request.addProperty("idDeportista", objUsuario.getIdDeportista());
 
             SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
             envelope.dotNet = true;
@@ -165,17 +107,18 @@ public class ReservaActivity extends AppCompatActivity {
                 if (obj1 == null){
                     resul = false;
                 }else{
-                    listaHorario.clear();
+
                     for(int i=0; i<obj1.getPropertyCount(); i++)
                     {
                         SoapObject obj2 =(SoapObject) obj1.getProperty(i);
-                        Horario objHorario=new Horario();
-                        objHorario.setHoraInicio(Integer.parseInt(obj2.getProperty(0).toString()));
-                        objHorario.setHoraFin(Integer.parseInt(obj2.getProperty(1).toString()));
+                        Deportista objDeportista=new Deportista();
+                        objDeportista.setId(Integer.parseInt(obj2.getProperty(0).toString()));
+                        objDeportista.setNombre(obj2.getProperty(1).toString());
+                        objDeportista.setApellidos(obj2.getProperty(2).toString());
+                        objDeportista.setCelular(obj2.getProperty(4).toString());
 
-                        listaHorario.add(objHorario);
+                        listaDeportista.add(objDeportista);
                     }
-
                 }
             }
             catch (Exception e)
@@ -190,20 +133,18 @@ public class ReservaActivity extends AppCompatActivity {
 
             if(result){
 
-
-
                 ArrayList<HashMap<String,String>> mylist=new ArrayList<HashMap<String, String>>();
 
-                for (Horario obj:listaHorario){
+                for (Deportista obj:listaDeportista){
                     HashMap<String,String> map=new HashMap<String,String>();
-                    map.put("horario",obj.getHoraInicio()+" - "+obj.getHoraFin());
+                    map.put("campo",obj.getNombre()+" "+obj.getApellidos());
 
                     mylist.add(map);
                 }
 
-                ListAdapter adapter=new SimpleAdapter(ReservaActivity.this
-                        ,mylist,R.layout.activity_item_horario
-                        ,new String[]{"horario"}
+                ListAdapter adapter=new SimpleAdapter(InvitarAmigosActivity.this
+                        ,mylist,R.layout.activity_item_deportista
+                        ,new String[]{"campo"}
                         ,new int[]{R.id.lblHorario});
 
                 listaAdapter=(ListView)findViewById(R.id.listViewPersona);
@@ -216,15 +157,11 @@ public class ReservaActivity extends AppCompatActivity {
                         CheckBox cb=(CheckBox)view.findViewById(R.id.chkEstado);
                         if(cb.isChecked()){
                             cb.setChecked(false);
-                            listaHorario.get(position).setSeleccionado(false);
+                            listaDeportista.get(position).setSeleccionado(false);
                         }else{
                             cb.setChecked(true);
-                            listaHorario.get(position).setSeleccionado(true);
+                            listaDeportista.get(position).setSeleccionado(true);
                         }
-
-                        calcularTotal();
-                       /* Intent i=new Intent(CanchasActivity.this,ReservaActivity.class);
-                        startActivity(i);*/
                     }
                 });
 
@@ -240,23 +177,14 @@ public class ReservaActivity extends AppCompatActivity {
     }
 
 
-    void calcularTotal(){
-        int total=0;
-        for (int i=0;i<listaHorario.size();i++){
-            if(listaHorario.get(i).isSeleccionado()){
-                total+=objCampo.getPrecio();
-            }
-        }
 
-        lblTotal.setText(""+total);
 
-    }
 
     public void viewGuardar(View v){
 
         boolean flag=false;
 
-        for(Horario obj:listaHorario){
+        for(Deportista obj:listaDeportista){
             if(obj.isSeleccionado()){
                 flag=true;
                 break;
@@ -264,19 +192,17 @@ public class ReservaActivity extends AppCompatActivity {
         }
 
         if(flag){
-            WSRegistrarReserva ws=new WSRegistrarReserva();
+            WSDetalleInvitados ws=new WSDetalleInvitados();
             ws.execute();
         }
         else{
-            Toast.makeText(ReservaActivity.this, "Debe Seleccionar un horario",
+            Toast.makeText(InvitarAmigosActivity.this, "Debe Seleccionar un amigo",
                     Toast.LENGTH_LONG).show();
         }
-
-
-
     }
 
-    private class WSRegistrarReserva extends AsyncTask<Integer,Integer,Boolean> {
+
+    private class WSDetalleInvitados extends AsyncTask<Integer,Integer,Boolean> {
         boolean error=false;
         protected void onPreExecute() {
             super.onPreExecute();
@@ -286,27 +212,21 @@ public class ReservaActivity extends AppCompatActivity {
         protected Boolean doInBackground(Integer... params) {
             boolean resul = true;
 
-            ConexionWS objConex=new ConexionWS("registrarReserva");
+            ConexionWS objConex=new ConexionWS("crearDetalleInvitado");
 
             SoapObject request = new SoapObject(objConex.getNameSpace(), objConex.getMethodName());
-            request.addProperty("fecha",dtpDate.getText().toString());
-            request.addProperty("idUsuario",objUsuario.getId());
-            request.addProperty("idCancha",objCampo.getId());
+            request.addProperty("idReserva",objReserva.getId());
 
 
-            SoapObject soapLogs = new SoapObject(objConex.getNameSpace(), "horaInicio");
-            SoapObject soapLogs2 = new SoapObject(objConex.getNameSpace(), "horaFin");
+            SoapObject soapLogs = new SoapObject(objConex.getNameSpace(), "idpeloteros");
 
-            for(Horario obj: listaHorario){
+            for(Deportista obj: listaDeportista){
                 if(obj.isSeleccionado()){
-                    soapLogs.addProperty("string",obj.getHoraInicio());
-                    soapLogs2.addProperty("string",obj.getHoraFin());
-                }
+                    soapLogs.addProperty("int",obj.getId());
+                 }
             }
 
             request.addSoapObject(soapLogs);
-            request.addSoapObject(soapLogs2);
-
 
 
             SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
@@ -339,18 +259,20 @@ public class ReservaActivity extends AppCompatActivity {
 
             if(result){
 
-                Toast.makeText(ReservaActivity.this, "Reserva Registrada",
+                Toast.makeText(InvitarAmigosActivity.this, "Invitaciones enviadas",
                         Toast.LENGTH_LONG).show();
                 finish();
-                Intent i=new Intent(ReservaActivity.this,MainActivity.class);
+                Intent i=new Intent(InvitarAmigosActivity.this,MainActivity.class);
                 startActivity(i);
             }
             else{
-                Toast.makeText(ReservaActivity.this, "Hubo un error al registrar",
+                Toast.makeText(InvitarAmigosActivity.this, "No se envio la invitacion",
                         Toast.LENGTH_LONG).show();
             }
 
         }
     }
+
+
 
 }

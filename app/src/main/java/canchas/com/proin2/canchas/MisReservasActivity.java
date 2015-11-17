@@ -1,6 +1,5 @@
 package canchas.com.proin2.canchas;
 
-import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
@@ -10,75 +9,46 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
-import android.widget.TextView;
 
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 
-import canchas.com.proin2.canchas.entidades.Campo;
-import canchas.com.proin2.canchas.entidades.CentroDeportivo;
+import canchas.com.proin2.canchas.entidades.Reserva;
+import canchas.com.proin2.canchas.entidades.Usuario;
+import canchas.com.proin2.canchas.utilidades.Application;
 import canchas.com.proin2.canchas.utilidades.ConexionWS;
 
-public class CanchasActivity extends AppCompatActivity {
+public class MisReservasActivity extends AppCompatActivity {
 
-    private static CentroDeportivo objCentroDeportivo;
-    TextView lblNombre,lblDireccion,lblTelefono,lblBalon,lblCamisetas;
+    private Usuario objUsuario;
+    private List<Reserva> listaReserva=new ArrayList<>();
     private ListView listaAdapter;
-    private List<Campo> listaCampo=new ArrayList<Campo>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_canchas);
+        setContentView(R.layout.activity_mis_reservas);
 
-        if(objCentroDeportivo==null){
-            objCentroDeportivo=(CentroDeportivo)getIntent().getExtras().getSerializable("canchas.com.proin2.canchas.objSucursal");
-        }
+        final Application global=(Application)getApplicationContext();
+        objUsuario=global.getObjUsuario();
 
-
-        findViews();
-
-        lblNombre.setText(objCentroDeportivo.getNombre());
-        lblDireccion.setText(objCentroDeportivo.getDireccion());
-        lblTelefono.setText(objCentroDeportivo.getTelefono());
-        lblBalon.setText((objCentroDeportivo.isBalon()?"Si":"No"));
-        lblCamisetas.setText(objCentroDeportivo.isCamisetas()?"Si":"No");
-
-
-        WSListarCampo ws=new WSListarCampo();
+        WSListarReservas ws=new WSListarReservas();
         ws.execute();
-
     }
-
-    void findViews(){
-        lblNombre=(TextView)findViewById(R.id.lblNombre);
-        lblDireccion=(TextView)findViewById(R.id.lblDireccion);
-        lblTelefono=(TextView)findViewById(R.id.lblTelefono);
-        lblBalon=(TextView)findViewById(R.id.lblBalon);
-        lblCamisetas=(TextView)findViewById(R.id.lblCamisetas);
-    }
-
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_canchas, menu);
+        getMenuInflater().inflate(R.menu.menu_mis_reservas, menu);
         return true;
     }
 
@@ -98,7 +68,7 @@ public class CanchasActivity extends AppCompatActivity {
     }
 
 
-    private class WSListarCampo extends AsyncTask<String,Integer,Boolean> {
+    private class WSListarReservas extends AsyncTask<String,Integer,Boolean> {
         boolean error=false;
         protected void onPreExecute() {
             super.onPreExecute();
@@ -108,10 +78,10 @@ public class CanchasActivity extends AppCompatActivity {
         protected Boolean doInBackground(String... params) {
             boolean resul = true;
 
-            ConexionWS objConex=new ConexionWS("listarCamposPorCentroDeportivo");
+            ConexionWS objConex=new ConexionWS("listarReservas");
 
             SoapObject request = new SoapObject(objConex.getNameSpace(), objConex.getMethodName());
-            request.addProperty("idCentroDeportivo",objCentroDeportivo.getId());
+            request.addProperty("idUsuario", objUsuario.getId());
 
 
             SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
@@ -133,13 +103,15 @@ public class CanchasActivity extends AppCompatActivity {
                     for(int i=0; i<obj1.getPropertyCount(); i++)
                     {
                         SoapObject obj2 =(SoapObject) obj1.getProperty(i);
-                        Campo objCampo=new Campo();
-                        objCampo.setId(Integer.parseInt(obj2.getProperty(0).toString()));
-                        objCampo.setLargo(Integer.parseInt(obj2.getProperty(1).toString()));
-                        objCampo.setAncho(Integer.parseInt(obj2.getProperty(2).toString()));
-                        objCampo.setPrecio(Integer.parseInt(obj2.getProperty(3).toString()));
+                        Reserva objReserva=new Reserva();
+                        objReserva.setId(Integer.parseInt(obj2.getProperty(0).toString()));
+                        objReserva.setCentrodeportivo(obj2.getProperty(1).toString());
+                        objReserva.setCampo(obj2.getProperty(2).toString());
+                        objReserva.setFecha(obj2.getProperty(3).toString());
+                        objReserva.setHoraInicio(obj2.getProperty(4).toString());
+                        objReserva.setHoraFin(obj2.getProperty(5).toString());
 
-                        listaCampo.add(objCampo);
+                        listaReserva.add(objReserva);
                     }
 
                 }
@@ -158,18 +130,18 @@ public class CanchasActivity extends AppCompatActivity {
 
                 ArrayList<HashMap<String,String>> mylist=new ArrayList<HashMap<String, String>>();
 
-                for (Campo obj:listaCampo){
+                for (Reserva obj:listaReserva){
                     HashMap<String,String> map=new HashMap<String,String>();
-                    map.put("campo","Largo: "+obj.getLargo()+" Ancho: "+obj.getAncho());
-                    map.put("precio",""+obj.getPrecio());
+                    map.put("campo",obj.getCentrodeportivo() + " - " + obj.getCampo());
+                    map.put("precio",obj.getFecha()+"  "+obj.getHoraInicio()+" - "+obj.getHoraFin());
 
                     mylist.add(map);
                 }
 
-                ListAdapter adapter=new SimpleAdapter(CanchasActivity.this
-                        ,mylist,R.layout.activity_item_campo
+                ListAdapter adapter=new SimpleAdapter(MisReservasActivity.this
+                        ,mylist,R.layout.activity_item_reserva
                         ,new String[]{"campo","precio"}
-                        ,new int[]{R.id.txtCampo,R.id.txtPrecio});
+                        ,new int[]{R.id.lblCentroDeportivo,R.id.txtFecha});
 
                 listaAdapter=(ListView)findViewById(R.id.listViewPersona);
 
@@ -178,9 +150,9 @@ public class CanchasActivity extends AppCompatActivity {
                 listaAdapter.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                        Intent i=new Intent(CanchasActivity.this,ReservaActivity.class);
+                        Intent i=new Intent(MisReservasActivity.this,InvitarAmigosActivity.class);
                         Bundle objBundle2=new Bundle();
-                        objBundle2.putSerializable("canchas.com.proin2.canchas.objCampo",listaCampo.get(position));
+                        objBundle2.putSerializable("canchas.com.proin2.canchas.objReserva",listaReserva.get(position));
                         i.putExtras(objBundle2);
                         startActivity(i);
                     }
@@ -196,6 +168,4 @@ public class CanchasActivity extends AppCompatActivity {
 
         }
     }
-
-
 }

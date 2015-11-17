@@ -42,4 +42,14 @@ public class MainActivity extends AppCompatActivity {
         Intent i=new Intent(MainActivity.this,SucursalesActivity.class);
         startActivity(i);
     }
+
+    public  void viewMisReservas(View v){
+        Intent i=new Intent(MainActivity.this,MisReservasActivity.class);
+        startActivity(i);
+    }
+
+    public void viewDeportistas(View v){
+        Intent i=new Intent(MainActivity.this,ListarPeloterosActivity.class);
+        startActivity(i);
+    }
 }

@@ -8,6 +8,7 @@ public class Usuario {
     private int id;
     private String nick;
     private int idTipoUsuario;
+    private int idDeportista;
 
     public int getId() {
         return id;
@@ -31,5 +32,13 @@ public class Usuario {
 
     public void setIdTipoUsuario(int idTipoUsuario) {
         this.idTipoUsuario = idTipoUsuario;
+    }
+
+    public int getIdDeportista() {
+        return idDeportista;
+    }
+
+    public void setIdDeportista(int idDeportista) {
+        this.idDeportista = idDeportista;
     }
 }
