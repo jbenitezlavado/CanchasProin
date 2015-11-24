@@ -99,7 +99,23 @@
             android:parentActivityName=".MainActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
+                android:value="canchas.com.proin2.canchas.AmigosActivity" />
+        </activity>
+        <activity
+            android:name=".AmigosActivity"
+            android:label="@string/title_activity_amigos"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
                 android:value="canchas.com.proin2.canchas.MainActivity" />
+        </activity>
+        <activity
+            android:name=".ResponderSolicitudActivity"
+            android:label="@string/title_activity_responder_solicitud"
+            android:parentActivityName=".AmigosActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="canchas.com.proin2.canchas.AmigosActivity" />
         </activity>
     </application>
 

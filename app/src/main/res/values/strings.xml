@@ -11,4 +11,6 @@
     <string name="title_activity_mis_reservas">MisReservasActivity</string>
     <string name="title_activity_invitar_amigos">InvitarAmigosActivity</string>
     <string name="title_activity_listar_peloteros">ListarPeloterosActivity</string>
+    <string name="title_activity_amigos">AmigosActivity</string>
+    <string name="title_activity_responder_solicitud">ResponderSolicitudActivity</string>
 </resources>

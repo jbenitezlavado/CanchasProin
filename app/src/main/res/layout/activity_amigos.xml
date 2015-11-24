@@ -1,11 +1,10 @@
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin">
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="canchas.com.proin2.canchas.AmigosActivity">
 
     <TableLayout
         android:id="@+id/tabla"
@@ -33,7 +32,7 @@
                     android:layout_centerVertical="false"
                     android:layout_column="0"
                     android:layout_gravity="center_horizontal"
-                    android:onClick="viewMisReservas"
+                    android:onClick="viewAgregarAmigos"
                     android:background="@mipmap/icn_cancha"
                     />
             </FrameLayout>
@@ -49,7 +48,7 @@
                     android:layout_height="70dp"
                     android:layout_centerVertical="false"
                     android:layout_column="1"
-                    android:onClick="viewDeportistas"
+                    android:onClick="viewSolicitudes"
                     android:layout_gravity="center_horizontal"
                     android:background="@mipmap/icn_soccerplayer"
                     />
@@ -71,7 +70,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:text="Mis Reservas" />
+                    android:text="Agregar Amigos" />
             </FrameLayout>
 
             <FrameLayout
@@ -84,62 +83,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:text="Amigos" />
+                    android:text="Ver Solicitudes" />
             </FrameLayout>
         </TableRow>
 
-        <TableRow
-            android:id="@+id/fila3"
-            android:layout_marginTop="20dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <FrameLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
-
-                <ImageButton
-                    android:id="@+id/btnMecanico"
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:layout_centerVertical="false"
-                    android:layout_gravity="center_horizontal"
-                    android:background="@mipmap/icn_reservar"
-                    android:onClick="viewReservar"
-                  />
-            </FrameLayout>
-
-
-
-
-        </TableRow>
-
-        <TableRow
-            android:id="@+id/fila4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <FrameLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1">
-
-                <TextView
-                    android:id="@+id/textView4"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_margin="5dp"
-                    android:text="Reservar" />
-            </FrameLayout>
-
-
-
-        </TableRow>
 
     </TableLayout>
-
 
 
 </RelativeLayout>

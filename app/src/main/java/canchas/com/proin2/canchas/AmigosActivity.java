@@ -7,18 +7,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-public class MainActivity extends AppCompatActivity {
+public class AmigosActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_amigos);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.menu_amigos, menu);
         return true;
     }
 
@@ -37,19 +37,15 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void viewReservar(View v){
-
-        Intent i=new Intent(MainActivity.this,SucursalesActivity.class);
+    public void viewAgregarAmigos(View v){
+        Intent i=new Intent(AmigosActivity.this,ListarPeloterosActivity.class);
         startActivity(i);
     }
 
-    public  void viewMisReservas(View v){
-        Intent i=new Intent(MainActivity.this,MisReservasActivity.class);
+    public void viewSolicitudes(View v){
+        Intent i=new Intent(AmigosActivity.this,ResponderSolicitudActivity.class);
         startActivity(i);
     }
 
-    public void viewDeportistas(View v){
-        Intent i=new Intent(MainActivity.this,AmigosActivity.class);
-        startActivity(i);
-    }
+
 }
