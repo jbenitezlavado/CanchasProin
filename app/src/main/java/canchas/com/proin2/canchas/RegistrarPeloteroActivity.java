@@ -121,6 +121,8 @@ public class RegistrarPeloteroActivity extends AppCompatActivity {
                 Toast.makeText(RegistrarPeloteroActivity.this, "Deportista creado con exito",
                         Toast.LENGTH_LONG).show();
 
+                finish();
+
             }else{
 
                 Toast.makeText(RegistrarPeloteroActivity.this, "Error al registrar deportista",

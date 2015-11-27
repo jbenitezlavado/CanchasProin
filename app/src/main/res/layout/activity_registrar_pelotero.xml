@@ -122,6 +122,8 @@
         android:layout_below="@id/txtContrasenia"
         android:layout_gravity="right"
         android:layout_marginTop="15dp"
+        android:background="@color/application"
+        android:textColor="@color/white"
         android:layout_marginRight="45dp"
         android:layout_marginLeft="45dp"
         android:padding="10dp"

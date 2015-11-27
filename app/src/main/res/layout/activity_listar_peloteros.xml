@@ -19,6 +19,8 @@
         android:layout_gravity="right"
         android:layout_marginRight="45dp"
         android:layout_below="@+id/listViewPersona"
+        android:background="@color/application"
+        android:textColor="@color/white"
         android:layout_marginLeft="45dp"
         android:padding="10dp"
         android:onClick="viewGuardar"

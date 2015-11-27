@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -223,6 +224,8 @@ public class InvitarAmigosActivity extends AppCompatActivity {
             for(Deportista obj: listaDeportista){
                 if(obj.isSeleccionado()){
                     soapLogs.addProperty("int",obj.getId());
+                    sendSMS(obj.getCelular(),"Estas invitado al Centro Deportivo: "+objReserva.getCentrodeportivo()
+                            +" en el Campo: "+objReserva.getCampo()+", el Dia: "+objReserva.getFecha()+" a las "+objReserva.getHoraInicio());
                  }
             }
 
@@ -273,6 +276,13 @@ public class InvitarAmigosActivity extends AppCompatActivity {
         }
     }
 
+
+    private void sendSMS(String phoneNumber, String message)
+    {
+        SmsManager sms = SmsManager.getDefault();
+        sms.sendTextMessage(phoneNumber, null, message, null, null);
+
+    }
 
 
 }

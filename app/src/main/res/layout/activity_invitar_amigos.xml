@@ -20,7 +20,9 @@
         android:layout_below="@+id/listViewPersona"
         android:layout_marginLeft="45dp"
         android:padding="10dp"
+        android:background="@color/application"
+        android:textColor="@color/white"
         android:onClick="viewGuardar"
-        android:text="Reservar"/>
+        android:text="Invitar"/>
 
 </RelativeLayout>

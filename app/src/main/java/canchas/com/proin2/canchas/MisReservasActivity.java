@@ -154,7 +154,12 @@ public class MisReservasActivity extends AppCompatActivity {
                         Bundle objBundle2=new Bundle();
                         objBundle2.putSerializable("canchas.com.proin2.canchas.objReserva",listaReserva.get(position));
                         i.putExtras(objBundle2);
+
+                        finish();
+
                         startActivity(i);
+
+
                     }
                 });
 

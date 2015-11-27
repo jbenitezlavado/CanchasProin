@@ -161,7 +161,7 @@ public class CanchasActivity extends AppCompatActivity {
                 for (Campo obj:listaCampo){
                     HashMap<String,String> map=new HashMap<String,String>();
                     map.put("campo","Largo: "+obj.getLargo()+" Ancho: "+obj.getAncho());
-                    map.put("precio",""+obj.getPrecio());
+                    map.put("precio","S/. "+obj.getPrecio());
 
                     mylist.add(map);
                 }

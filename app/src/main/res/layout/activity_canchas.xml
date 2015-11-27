@@ -22,7 +22,7 @@
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:layout_gravity="center_vertical"
-                android:text="Nombre: "
+                android:text="NOMBRE: "
                 android:textColor="@color/application"
                 />
 
@@ -50,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:layout_gravity="center_vertical"
-                android:text="Direccion: "
+                android:text="DIRECCIÓN: "
                 android:textColor="@color/application"
                 />
 
@@ -78,7 +78,7 @@
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:layout_gravity="center_vertical"
-                android:text="Telefono: "
+                android:text="TELEFONO: "
                 android:textColor="@color/application"
                 />
 
@@ -99,7 +99,7 @@
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:layout_gravity="center_vertical"
-                android:text=" Balon: "
+                android:text=" BALON: "
                 android:textColor="@color/application"
                 />
 
@@ -119,7 +119,7 @@
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
                 android:layout_gravity="center_vertical"
-                android:text=" Camisetas: "
+                android:text=" CAMISETAS: "
                 android:textColor="@color/application"
                 />
 

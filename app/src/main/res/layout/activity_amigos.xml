@@ -33,7 +33,7 @@
                     android:layout_column="0"
                     android:layout_gravity="center_horizontal"
                     android:onClick="viewAgregarAmigos"
-                    android:background="@mipmap/icn_cancha"
+                    android:background="@mipmap/icn_add_deportista"
                     />
             </FrameLayout>
 
